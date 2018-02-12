@@ -1,3 +1,9 @@
-From alpine:latest
+From ubuntu
 MAINTAINER jackzyang
-CMD echo "Hello World!"
+RUN sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
+RUN apt-get clean
+RUN apt-get update
+RUN apt-get install -y nginx
+COPY index.html /var/www/html 
+ENTRYPOINT ["/usr/sbin/nginx", "-g", "daemon off;"]
+EXPOSE 8080
